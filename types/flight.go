@@ -16,6 +16,7 @@ type Flight struct {
 	AvailableSeats   int     `json:"availableSeats"`
 	Price            float64 `json:"price"`
 	Status           string  `json:"status"`
+	Seats            []Seat  `json:"seats" gorm:"foreignKey:FlightID"`
 }
 
 type FlightResponse struct {
