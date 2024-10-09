@@ -31,7 +31,7 @@ func NewPostgreDB(config Config) (*gorm.DB, error) {
 	}
 
 	// Auto-migrate the schema
-	err = db.AutoMigrate(&types.User{}, &types.Flight{}, &types.Booking{}, &types.Reservation{}, &types.Payment{})
+	err = db.AutoMigrate(&types.User{}, &types.Flight{}, &types.Booking{}, &types.Reservation{}, &types.Payment{}, &types.Seat{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to auto-migrate schema: %w", err)
 	}
