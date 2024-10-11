@@ -10,7 +10,6 @@ import (
 )
 
 func (s *Server) handleGetProfile(ctx *gin.Context) {
-	fmt.Println("handleGetProfile called")
 	tokenString, exists := ctx.Get("token")
 	fmt.Println("tokenString", tokenString)
 	if !exists {
