@@ -1,0 +1,57 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go specific
+vendor/
+*.log
+*.tmp
+*.test
+
+# Dependency directories (vendor/)
+vendor/
+
+# Compiled files
+*.o
+*.a
+*.out
+
+# Build artifacts
+/build/
+/bin/
+/dist/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Local env files (if you store sensitive configuration locally)
+.env
+.env.*
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Storage (if used for local development data or cache)
+storage/*
+!storage/.gitkeep # Optionally keep this if you need the folder but not the contents
+
+# Database files (if used for local dev database)
+*.db
+
+# Logs and error tracking
+*.log
+
+# Coverage files (for tests)
+*.cover
+coverage.out
