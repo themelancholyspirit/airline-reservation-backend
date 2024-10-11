@@ -6,6 +6,7 @@ import (
 	"github.com/themelancholyspirit/airline-reservation-system/api"
 	"github.com/themelancholyspirit/airline-reservation-system/database"
 	"github.com/themelancholyspirit/airline-reservation-system/storage"
+	"github.com/themelancholyspirit/airline-reservation-system/util"
 )
 
 func main() {
@@ -26,6 +27,8 @@ func main() {
 	}
 
 	storage := storage.NewPostgreStorage(db)
+
+	util.SeedFlights(storage)
 
 	server := api.NewServer(":8080", storage)
 	server.SetupRoutes()

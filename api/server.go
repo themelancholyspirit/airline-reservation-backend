@@ -42,6 +42,9 @@ func (s *Server) SetupRoutes() {
 	s.Router.POST("/login", s.handleLogin)
 	s.Router.GET("/profile", util.AuthMiddleware(s.handleGetProfile))
 	s.Router.PUT("/profile", util.AuthMiddleware(s.handleUpdateProfile))
+	s.Router.GET("/bookings", util.AuthMiddleware(s.handleGetUserBookings))
+	s.Router.POST("/bookings", util.AuthMiddleware(s.handleCreateBooking))
+
 }
 
 func (s *Server) handleMain(ctx *gin.Context) {

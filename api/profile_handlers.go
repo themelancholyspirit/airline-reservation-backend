@@ -65,7 +65,7 @@ func (s *Server) handleUpdateProfile(ctx *gin.Context) {
 	}
 
 	profileResponse := types.User{
-		ID:    claims.UserID,
+		ID:    uint(claims.UserID),
 		Name:  updateRequest.Name,
 		Email: updateRequest.Email,
 	}

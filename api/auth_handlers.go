@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -32,13 +33,7 @@ func (s *Server) handleSignup(ctx *gin.Context) {
 		return
 	}
 
-	token, err := util.GenerateToken(user.ID, user.Email, user.Name)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
-		return
-	}
-
-	ctx.JSON(http.StatusCreated, gin.H{"token": token})
+	ctx.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
 }
 
 func (s *Server) handleLogin(ctx *gin.Context) {
@@ -52,6 +47,7 @@ func (s *Server) handleLogin(ctx *gin.Context) {
 
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		fmt.Println("Error:", err)
 		return
 	}
 
@@ -61,7 +57,9 @@ func (s *Server) handleLogin(ctx *gin.Context) {
 	}
 
 	token, err := util.GenerateToken(user.ID, user.Email, user.Name)
+
 	if err != nil {
+		fmt.Println("Error:", err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
 	}

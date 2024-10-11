@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"fmt"
 
 	"gorm.io/gorm"
 
@@ -21,7 +22,7 @@ func (s *PostgreStorage) CreateUser(ctx context.Context, user types.User) error 
 	return s.db.WithContext(ctx).Create(&user).Error
 }
 
-func (s *PostgreStorage) GetUser(ctx context.Context, id string) (types.User, error) {
+func (s *PostgreStorage) GetUser(ctx context.Context, id uint) (types.User, error) {
 	var user types.User
 	err := s.db.WithContext(ctx).First(&user, "id = ?", id).Error
 	return user, err
@@ -37,7 +38,7 @@ func (s *PostgreStorage) UpdateUser(ctx context.Context, user types.UserUpdateRe
 	return s.db.WithContext(ctx).Model(&types.User{}).Where("email = ?", user.Email).Updates(user).Error
 }
 
-func (s *PostgreStorage) DeleteUser(ctx context.Context, id string) error {
+func (s *PostgreStorage) DeleteUser(ctx context.Context, id uint) error {
 	return s.db.WithContext(ctx).Delete(&types.User{}, "id = ?", id).Error
 }
 
@@ -52,17 +53,17 @@ func (s *PostgreStorage) CreateFlight(ctx context.Context, flight types.Flight) 
 	return s.db.WithContext(ctx).Create(&flight).Error
 }
 
-func (s *PostgreStorage) GetFlight(ctx context.Context, id string) (types.Flight, error) {
+func (s *PostgreStorage) GetFlight(ctx context.Context, id uint) (types.Flight, error) {
 	var flight types.Flight
 	err := s.db.WithContext(ctx).First(&flight, "id = ?", id).Error
 	return flight, err
 }
 
-func (s *PostgreStorage) UpdateFlight(ctx context.Context, id string, flight types.Flight) error {
+func (s *PostgreStorage) UpdateFlight(ctx context.Context, id uint, flight types.Flight) error {
 	return s.db.WithContext(ctx).Model(&types.Flight{}).Where("id = ?", id).Updates(flight).Error
 }
 
-func (s *PostgreStorage) DeleteFlight(ctx context.Context, id string) error {
+func (s *PostgreStorage) DeleteFlight(ctx context.Context, id uint) error {
 	return s.db.WithContext(ctx).Delete(&types.Flight{}, "id = ?", id).Error
 }
 
@@ -74,20 +75,27 @@ func (s *PostgreStorage) ListFlights(ctx context.Context) ([]types.Flight, error
 
 // Booking Storage Implementation
 func (s *PostgreStorage) CreateBooking(ctx context.Context, booking types.Booking) error {
+	fmt.Println("Booking WHEN DB IS CALLED:", booking)
 	return s.db.WithContext(ctx).Create(&booking).Error
 }
 
-func (s *PostgreStorage) GetBooking(ctx context.Context, id string) (types.Booking, error) {
+func (s *PostgreStorage) GetBooking(ctx context.Context, id uint) (types.Booking, error) {
 	var booking types.Booking
 	err := s.db.WithContext(ctx).First(&booking, "id = ?", id).Error
 	return booking, err
 }
 
-func (s *PostgreStorage) UpdateBooking(ctx context.Context, id string, booking types.Booking) error {
+func (s *PostgreStorage) GetBookingsByUserID(ctx context.Context, userID uint) ([]types.Booking, error) {
+	var bookings []types.Booking
+	err := s.db.WithContext(ctx).Where("user_id = ?", userID).Find(&bookings).Error
+	return bookings, err
+}
+
+func (s *PostgreStorage) UpdateBooking(ctx context.Context, id uint, booking types.Booking) error {
 	return s.db.WithContext(ctx).Model(&types.Booking{}).Where("id = ?", id).Updates(booking).Error
 }
 
-func (s *PostgreStorage) DeleteBooking(ctx context.Context, id string) error {
+func (s *PostgreStorage) DeleteBooking(ctx context.Context, id uint) error {
 	return s.db.WithContext(ctx).Delete(&types.Booking{}, "id = ?", id).Error
 }
 
@@ -102,17 +110,17 @@ func (s *PostgreStorage) CreateReservation(ctx context.Context, reservation type
 	return s.db.WithContext(ctx).Create(&reservation).Error
 }
 
-func (s *PostgreStorage) GetReservation(ctx context.Context, id string) (types.Reservation, error) {
+func (s *PostgreStorage) GetReservation(ctx context.Context, id uint) (types.Reservation, error) {
 	var reservation types.Reservation
 	err := s.db.WithContext(ctx).First(&reservation, "id = ?", id).Error
 	return reservation, err
 }
 
-func (s *PostgreStorage) UpdateReservation(ctx context.Context, id string, reservation types.Reservation) error {
+func (s *PostgreStorage) UpdateReservation(ctx context.Context, id uint, reservation types.Reservation) error {
 	return s.db.WithContext(ctx).Model(&types.Reservation{}).Where("id = ?", id).Updates(reservation).Error
 }
 
-func (s *PostgreStorage) DeleteReservation(ctx context.Context, id string) error {
+func (s *PostgreStorage) DeleteReservation(ctx context.Context, id uint) error {
 	return s.db.WithContext(ctx).Delete(&types.Reservation{}, "id = ?", id).Error
 }
 
@@ -127,17 +135,17 @@ func (s *PostgreStorage) CreatePayment(ctx context.Context, payment types.Paymen
 	return s.db.WithContext(ctx).Create(&payment).Error
 }
 
-func (s *PostgreStorage) GetPayment(ctx context.Context, id string) (types.Payment, error) {
+func (s *PostgreStorage) GetPayment(ctx context.Context, id uint) (types.Payment, error) {
 	var payment types.Payment
 	err := s.db.WithContext(ctx).First(&payment, "id = ?", id).Error
 	return payment, err
 }
 
-func (s *PostgreStorage) UpdatePayment(ctx context.Context, id string, payment types.Payment) error {
+func (s *PostgreStorage) UpdatePayment(ctx context.Context, id uint, payment types.Payment) error {
 	return s.db.WithContext(ctx).Model(&types.Payment{}).Where("id = ?", id).Updates(payment).Error
 }
 
-func (s *PostgreStorage) DeletePayment(ctx context.Context, id string) error {
+func (s *PostgreStorage) DeletePayment(ctx context.Context, id uint) error {
 	return s.db.WithContext(ctx).Delete(&types.Payment{}, "id = ?", id).Error
 }
 
